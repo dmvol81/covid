@@ -9,9 +9,6 @@ ln -s ../covid-rt-estimates covid-rt-estimates
 ## Update national reports
 Rscript utils/update_report_templates.R
 
-## Update the paper
-Rscript utils/update_paper.R
-
 ## Manually force a UK page update
 Rscript -e 'rmarkdown::render("_posts/national/united-kingdom/united-kingdom.Rmd")'
 

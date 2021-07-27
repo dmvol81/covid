@@ -14,6 +14,7 @@ purrr::walk(post_dirs,
 
 ## get all posts
 posts <- list.files(post_dirs, pattern = "\\.Rmd$", full.names = TRUE, recursive = TRUE)
+posts <- unique(posts)
 
 ## Make rendering safe to errors
 safe_render <- purrr::safely(rmarkdown::render)
