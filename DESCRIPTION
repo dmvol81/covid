@@ -55,7 +55,6 @@ Imports:
 Additional_repositories: 
   http://packages.ropensci.org/
 Remotes:
-  epiforecasts/covidregionaldata,
   epiforecasts/EpiNow2,
   gadenbuie/xaringanExtra
 License: MIT + file LICENSE
