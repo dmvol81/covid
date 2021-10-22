@@ -24,10 +24,15 @@ library(DT)
 
 interactive <- TRUE
 
+# Load exclusions
+exclusions <- data.table::fread(here::here("exclusions.csv")) %>%
+  dplyr::filter(folder == {{folder}})
+
 # Load summary data -------------------------------------------------------
 summary_table <- data.table::fread(here::here("covid-rt-estimates", "subnational", 
                                               folder, "cases", 
-                                              "summary", "summary_table.csv"))
+                                              "summary", "summary_table.csv")) %>%
+  dplyr::filter_at(1, all_vars(!(. %in% exclusions$region)))
 
 summary_table$`Expected change in daily cases` <- 
   factor(summary_table$`Expected change in daily cases`, 
