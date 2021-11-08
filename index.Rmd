@@ -4,6 +4,7 @@ site: distill::distill_website
 bibliography: library.bib
 ---
 
+**We are not currently updating estimates due to an issue with our backend infrastructure. We hope to resolve this in the next few weeks.**
 
 ```{r, include = FALSE}
 title <- FALSE
