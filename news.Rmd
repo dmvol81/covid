@@ -13,6 +13,10 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+## 2021-10-11
+
+We are not currently updating estimates due to an issue with our backend infrastructure. We hope to resolve this in the next few weeks.
+
 ## 2021-06-28
 
 Stop plotting forecasts. These can still be found in the summary files.
