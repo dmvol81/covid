@@ -142,7 +142,8 @@ rt_test_positive <- fread(file.path(data_path, "cases/summary/rt.csv"))
 summary <- rbindlist(list("admissions" = rt_admissions,
                           "deaths" = rt_deaths,
                           "cases" = rt_test_positive), idcol = "source")
-summary <- summary[type == "estimate"]
+summary <- summary %>%
+	dplyr::filter(type == "estimate")
 
 # Data
 admissions <- fread(file.path(data_path, "admissions/summary/reported_cases.csv"))
@@ -152,17 +153,23 @@ test_positive <- fread(file.path(data_path, "cases/summary/reported_cases.csv"))
 data <- rbindlist(list("admissions" = admissions, 
                        "deaths" = deaths, 
                        "cases" = test_positive), idcol = "source")
-setnames(data, "confirm", "count")
-data <- data[, count := as.numeric(count)]
-data <- data[, count_ma := ma(as.numeric(count), 7), by = .(source, region)]
+
+data <- data %>%
+  dplyr::rename(count = confirm) %>%
+  dplyr::mutate(count = as.numeric(count)) %>%
+  dplyr::group_by(source, region) %>%
+  dplyr::mutate(count_ma = ma(as.numeric(count), 7)) %>%
+  dplyr::ungroup()
+
 # Join
 summary <- merge(summary, data, by = c("region", "date", "source"), all.x = TRUE, all.y = TRUE)
 
-summary <- mutate(summary,
-                  'Data source' = dplyr::recode_factor(source,
-                                                       "cases" = "Test-positives",
-                                                       "admissions" = "Hospital admissions",
-                                                       "deaths" = "Deaths"))
+summary <- summary %>%
+	dplyr::mutate(`Data source` = dplyr::recode_factor(source,
+                                                           "cases" = "Test-positives",
+                                                           "admissions" = "Hospital admissions",
+                                                           "deaths" = "Deaths"))
+
 # Plotting features
 colours <- brewer.pal(name = "Dark2", n = 6)[c(1, 4, 6)]
 names(colours) <- c("Test-positives", "Hospital admissions", "Deaths")
@@ -172,7 +179,8 @@ region_names <- factor(c("England", "Scotland", "Wales", "Northern Ireland",
                   "London", "South East", "South West"), ordered = TRUE)
 
 plot_rt <- function(region_name) {
-  ggplot(summary[region %in% region_name], aes(x = date, col = `Data source`, fill = `Data source`)) +
+  ggplot(summary %>% dplyr::filter(region %in% region_name), 
+	 aes(x = date, col = `Data source`, fill = `Data source`)) +
       geom_ribbon(aes(ymin = lower_20, ymax = upper_20), alpha = 0.6, size = 0, colour = NA) +
       geom_ribbon(ggplot2::aes(ymin = lower_50, ymax = upper_50), alpha = 0.4, size = 0, colour = NA) +
       geom_ribbon(ggplot2::aes(ymin = lower_90, ymax = upper_90), alpha = 0.2, size = 0.05) +
@@ -188,7 +196,8 @@ plot_rt <- function(region_name) {
 region_plot_rt <- purrr::map(region_names, ~ plot_rt(region_name = .x))
 
 plot_cases <- function(region_name) {
-    ggplot(summary[region %in% region_name], aes(x = date, col = `Data source`, fill = `Data source`)) +
+    ggplot(summary %>% dplyr::filter(region %in% region_name), 
+	   aes(x = date, col = `Data source`, fill = `Data source`)) +
     geom_point(ggplot2::aes(y = count)) +
     geom_line(ggplot2::aes(y = count_ma)) +
     labs(y = "Log count", x = NULL, title = region_name) +
