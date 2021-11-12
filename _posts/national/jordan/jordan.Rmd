@@ -1,7 +1,7 @@
 ---
 title: "Estimates for Jordan"
 description: |
- We are not currently updating estimates due to an issue with our backend infrastructure. We hope to resolve this in the next few weeks.
+ Identifying changes in the reproduction number, rate of spread, and doubling time during the course of the COVID-19 outbreak whilst accounting for potential biases due to delays in case reporting in Jordan. These results are impacted by changes in testing effort, increases and decreases in testing effort will increase and decrease reproduction number estimates respectively.
 bibliography: library.bib
 output:
  distill::distill_article:
