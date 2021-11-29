@@ -61,7 +61,12 @@ countries <- countries %>%
 
 # Remove countries with regional breakdowns -------------------------------
 ## Countries with regional breakdowns
-regional_breakdowns <- readRDS(here::here("data", "subnational_estimates.rds"))
+subnational_dirs <- list.files(here::here("_posts", "national"), include.dirs = TRUE)
+regional_breakdowns <- 
+  subnational_dirs[file.exists(
+    here::here("_posts", "national", subnational_dirs, 
+	       paste0(subnational_dirs, ".Rmd"))
+  )]
 
 countries <- countries %>%
   dplyr::filter(!file_name %in% regional_breakdowns) %>%
