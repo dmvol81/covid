@@ -30,7 +30,7 @@ geoData <- dplyr::left_join(geoData, region_codes, by = "iso_3166_2") %>%
 
 
 ```{r load-defaults, include = FALSE}
-region <- "Viet Nam"
+region <- "Vietnam"
 folder <- "vietnam"
 source(here::here("utils/subnational_defaults.R"), local = TRUE)
 source(here::here("utils/epi_leaflet.R"), local = TRUE)
