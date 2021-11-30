@@ -20,6 +20,9 @@ library(magrittr)
 region_codes <- covidregionaldata::get_regional_data(country = "South Africa") %>% 
   dplyr::filter(!is.na(province)) %>%
   dplyr::select(province, iso_3166_2) %>% 
+  dplyr::mutate(iso_3166_2 = dplyr::recode(iso_3166_2,
+					   `ZA-GP` = "ZA-GT",
+					   `ZA-KZN` = "ZA-NL")) %>%
   unique()
 ```
 
