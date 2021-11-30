@@ -1,5 +1,4 @@
 page,error
-_posts/national/vietnam/vietnam.Rmd,"list(message = ""cannot open the connection"", call = gzfile(file, ""rb""))"
 _posts/subnational/canada-full/manitoba/manitoba.Rmd,"list(message = ""cannot open the connection"", call = gzfile(file, ""rb""))"
 _posts/subnational/canada-full/new-brunswick/new-brunswick.Rmd,"list(message = ""cannot open the connection"", call = gzfile(file, ""rb""))"
 _posts/subnational/canada-full/newfoundland-and-labrador/newfoundland-and-labrador.Rmd,"list(message = ""cannot open the connection"", call = gzfile(file, ""rb""))"
